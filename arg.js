@@ -22,7 +22,9 @@ fetch('https://api.publicapis.org/entries')
     const filteredData = data.filter(element => element.Category === search)
     
     if( myArgs[0] === NaN){
-        console.log(filteredData)
+        console.log('No Results')
+    } else if(myArgs[1] === NaN){
+        console.log(filteredData);
     } else{
         console.log(filteredData.slice(0, myArgs[1]));
     }
