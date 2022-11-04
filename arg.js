@@ -1,46 +1,35 @@
 console.log(process.argv);
 const fetch = require('node-fetch');
 
+const myArgs = process.argv.slice(2);
+console.log('myArgs: ', myArgs);
+
+console.log('arg1', myArgs[0]);
+console.log('arg1', myArgs[1]);
+
+
 fetch('https://api.publicapis.org/entries')
-    .then(res => res.json([]))
-    .then(json => {
-        console.log('first user in array');
-        // let data = [];
-        // data.push(json)
-        // json.push(data);
-        // data.sort(function(a, b) {
-        //     return a.API.localeCompare(b.API);
-        //  });
-        // data.sort(function(a, b) {
-        //     return a.API.localeCompare(b.API);
-        // //  });
-        // let data = [];
-        // for (let i = 0; i < json.length; i++) {
-        //     data.push(json[i]) 
-            
-        // }
-        // console.log(data);
-        // console.log(data.sort( (a, b) => a.API.localeCompare(b.API))) 
-        // console.log(sorted);
-        // console.log(json);
+.then(res => res.json())
+.then(json => {
     
+    let data = json.entries.sort(function(a, b){
+        return a.API.localeCompare(b.API)
     });
 
-const myArgs = process.argv.slice(2);
+    // Put first letter to uppercase
+    let search = myArgs[0].charAt(0).toUpperCase() + myArgs[0].slice(1);
+    // filter search by the category
+    const filteredData = data.filter(element => element.Category === search)
+    
+    if( myArgs[0] === NaN){
+        console.log(filteredData)
+    } else{
+        console.log(filteredData.slice(0, myArgs[1]));
+    }
+});
 
-console.log('myArgs: ', myArgs[2]);
 
-// switch (myArgs[1]) {
-//     case 'insult':
-//       console.log(myArgs[2], 'smells quite badly.');
-//       break;
-//     case 'compliment':
-//       console.log(myArgs[2], 'is really cool.');
-//       break;
-//     default:
-//       console.log('Sorry, that is not something I know how to do.');
-//   }
-// require express
 
-// const marklogic = require('marklogic');
+
+
 
